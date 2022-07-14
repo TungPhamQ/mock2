@@ -1,6 +1,10 @@
 <template>
     <div class="comment-section">
-        <div class="comment-item" v-for="comment in comments" :key="comment.id">
+        <div
+            class="comment-item"
+            v-for="comment in post.comments"
+            :key="comment.id"
+        >
             <img :src="comment.avatarSrc" class="user-avatar" />
             <div>
                 <span>
@@ -11,7 +15,9 @@
             </div>
         </div>
 
-        <a href="#">View all 27 comment</a>
+        <a href="#" class="unfold-comment-button" v-if="post.isFolded"
+            >View all 27 comment</a
+        >
         <CommentInput />
     </div>
 </template>
@@ -19,7 +25,7 @@
 <script>
 import CommentInput from "./CommentInput.vue";
 export default {
-    props: { comments: Array },
+    props: { post: Object },
     components: { CommentInput },
 };
 </script>
@@ -59,6 +65,14 @@ export default {
             font-size: 0.875rem;
             line-height: 24px;
         }
+    }
+    .unfold-comment-button {
+        text-decoration: none;
+        color: #0e489b;
+
+        font-weight: 500;
+        font-size: 0.875rem;
+        line-height: 24px;
     }
 }
 </style>

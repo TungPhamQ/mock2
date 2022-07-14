@@ -19,7 +19,7 @@ export default {
     display: flex;
     align-items: center;
     height: 40px;
-    margin-top: 24px;
+    margin-top: 16px;
     position: relative;
     img {
         height: 40px;

@@ -46,7 +46,7 @@ export default {
     width: 100%;
     margin: auto;
     .post-item {
-        min-height: calc(100vh + 60px);
+        min-height: auto;
     }
 }
 </style>

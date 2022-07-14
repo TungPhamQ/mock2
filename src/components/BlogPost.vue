@@ -7,15 +7,36 @@
                     <h5 class="user-name">{{ post.userName }}</h5>
                     <p class="posted-time">{{ post.postedTime }}</p>
                 </span>
+                <div class="edit-button">
+                    <img src="@/assets/pen.png" />
+                    <img src="@/assets/trash.png" />
+                    <img src="@/assets/bookmarked.png" />
+                </div>
             </div>
 
             <p class="post-caption">
                 {{ post.caption }}
                 <br />
                 <a href="#">View more</a>
+                <br />
+                <a href="#">{{ post.hashtag }}</a>
             </p>
 
-            <img :src="post.picture" class="main-picture" />
+            <img :src="post.picture" class="main-picture" v-if="post.picture" />
+            <div
+                class="attachment-file"
+                v-for="item in post.attachment"
+                :key="item.id"
+            >
+                <div>
+                    <img :src="item.iconSrc" class="attachment-icon" />
+                    <p class="file-name">{{ item.name }}</p>
+                </div>
+                <div>
+                    <p class="capacity">{{ item.capacity }}</p>
+                    <img src="@/assets/download-icon.png" v-if="item.name" />
+                </div>
+            </div>
 
             <div class="engaging-section">
                 <div>
@@ -28,7 +49,7 @@
                 </div>
             </div>
 
-            <CommentSection :comments="post.comments" />
+            <CommentSection :post="post" />
         </div>
     </div>
 </template>
@@ -36,9 +57,7 @@
 <script>
 import CommentSection from "./CommentSection.vue";
 export default {
-    props: {
-        msg: String,
-    },
+    props: {},
     components: { CommentSection },
     data() {
         return {
@@ -51,8 +70,14 @@ export default {
                     caption:
                         "Search input is a must have of almost all apps. In this cheatsheet you can get inspiration on 6 variants of this component. Which one is your favourite?",
                     picture: require("@/assets/pic1.png"),
+                    // attachment: {
+                    //     iconSrc: "",
+                    //     name: "",
+                    //     capacity: "",
+                    // },
                     reationAmount: 52,
                     commentAmount: 32,
+                    isFolded: true,
                     comments: [
                         {
                             id: "comment1",
@@ -85,15 +110,64 @@ export default {
                     ],
                 },
                 {
-                    id: 1,
+                    id: 2,
                     avatarSrc: require("@/assets/avatar1.png"),
                     userName: "Ralph Edwards",
                     postedTime: "15 minutes ago",
                     caption:
                         "Search input is a must have of almost all apps. In this cheatsheet you can get inspiration on 6 variants of this component. Which one is your favourite?",
-                    picture: require("@/assets/pic1.png"),
+                    picture: require("@/assets/pic2.png"),
+                    // attachment: [
+                    //     {
+                    //         iconSrc: "",
+                    //         name: "",
+                    //         capacity: "",
+                    //     },
+                    // ],
                     reationAmount: 52,
                     commentAmount: 32,
+                    comments: [],
+                },
+                {
+                    id: 3,
+                    avatarSrc: require("@/assets/avatar1.png"),
+                    userName: "Ralph Edwards",
+                    postedTime: "15 minutes ago",
+                    caption:
+                        "Search input is a must have of almost all apps. In this cheatsheet you can get inspiration on 6 variants of this component. Which one is your favourite?",
+                    picture: "",
+                    attachment: [
+                        {
+                            iconSrc: require("@/assets/ppt.png"),
+                            name: "Jerry-2020_I-9_Form.ppt",
+                            capacity: "19KB",
+                        },
+                        {
+                            iconSrc: require("@/assets/doc.png"),
+                            name: "pdf-docusign.doc",
+                            capacity: "18 MB",
+                        },
+                        {
+                            iconSrc: require("@/assets/xls.png"),
+                            name: "mine.xlsx",
+                            capacity: "1 MB",
+                        },
+                        {
+                            iconSrc: require("@/assets/doc.png"),
+                            name: "sharefile.doc",
+                            capacity: "25 MB",
+                        },
+                        {
+                            iconSrc: require("@/assets/ppt.png"),
+                            name: "formsi9.pdf",
+                            capacity: "10 KB",
+                        },
+                    ],
+                    hashtag: `#reels #instagramreels
+#beautifuldestinations #earthfocus #earthbestshots #earthoffcial #earthpix #thegreatplanet #discoverearth #fantastic_earth #awesome_earthpix #roamtheplanet`,
+                    reationAmount: 52,
+                    commentAmount: 32,
+                    isFolded: true,
                     comments: [
                         {
                             id: "comment1",
@@ -126,15 +200,42 @@ export default {
                     ],
                 },
                 {
-                    id: 1,
+                    id: 4,
                     avatarSrc: require("@/assets/avatar1.png"),
                     userName: "Ralph Edwards",
                     postedTime: "15 minutes ago",
                     caption:
                         "Search input is a must have of almost all apps. In this cheatsheet you can get inspiration on 6 variants of this component. Which one is your favourite?",
-                    picture: require("@/assets/pic1.png"),
-                    reationAmount: 52,
+                    picture: require("@/assets/pic4.png"),
+
+                    reationAmount: 41,
                     commentAmount: 32,
+                    isFolded: false,
+                },
+                {
+                    id: 5,
+                    avatarSrc: require("@/assets/avatar1.png"),
+                    userName: "Ralph Edwards",
+                    postedTime: "15 minutes ago",
+                    caption:
+                        "Search input is a must have of almost all apps. In this cheatsheet you can get inspiration on 6 variants of this component. Which one is your favourite?",
+                    picture: "",
+                    reationAmount: 41,
+                    commentAmount: 32,
+                    isFolded: false,
+                },
+                {
+                    id: 6,
+                    avatarSrc: require("@/assets/avatar1.png"),
+                    userName: "Ralph Edwards",
+                    postedTime: "15 minutes ago",
+                    caption:
+                        "Search input is a must have of almost all apps. In this cheatsheet you can get inspiration on 6 variants of this component. Which one is your favourite?",
+                    picture: require("@/assets/pic6.png"),
+
+                    reationAmount: 41,
+                    commentAmount: 32,
+                    isFolded: true,
                     comments: [
                         {
                             id: "comment1",
@@ -184,6 +285,8 @@ export default {
         display: flex;
         height: 48px;
         margin: 16px;
+        align-items: center;
+
         span {
             margin-left: 12px;
         }
@@ -202,6 +305,14 @@ export default {
             line-height: 20px;
 
             color: #767676;
+        }
+        .edit-button {
+            position: absolute;
+            right: 28px;
+            img {
+                margin-left: 24px;
+                cursor: pointer;
+            }
         }
     }
     .post-caption {
@@ -234,6 +345,32 @@ export default {
             display: flex;
             align-items: center;
             gap: 18px;
+        }
+    }
+    .attachment-file {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 28px 20px 20px;
+        div {
+            display: flex;
+            align-items: center;
+        }
+        p {
+            display: inline;
+            margin: 0 29px 0 12px;
+        }
+        .file-name {
+            font-weight: 400;
+            font-size: 0.875rem;
+            line-height: 24px;
+        }
+
+        .capacity {
+            font-weight: 400;
+            font-size: 0.813rem;
+            line-height: 20px;
+
+            color: #767676;
         }
     }
 }

@@ -5,6 +5,7 @@
                 v-for="item in menubarButtons"
                 :key="item.name"
                 class="menu-item"
+                :class="[item.name == 'Technology' ? activeClass : '']"
             >
                 <router-link :to="item.linkPage" class="title">
                     <img :src="item.iconSrc" />
@@ -57,6 +58,8 @@ export default {
                     newPostAmount: "99+",
                 },
             ],
+            isActive: true,
+            activeClass: "activeClass",
         };
     },
 };
@@ -102,6 +105,12 @@ export default {
         color: #fff;
         padding: 0 6px;
         border-radius: 40px;
+    }
+}
+.activeClass {
+    background: #007c7c;
+    p {
+        color: #fff;
     }
 }
 img {

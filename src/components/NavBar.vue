@@ -2,8 +2,8 @@
     <div class="nav-bar">
         <nav>
             <a href="/#/home"><img src="../assets/logo.png" /></a>
-            <NavBarButton />
-            <SearchBar />
+            <NavBarButton class="nav-bar-button" />
+            <SearchBar class="search-bar" />
             <PersonalProfile />
         </nav>
     </div>
@@ -27,7 +27,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 .nav-bar nav {
     display: flex;
     justify-content: space-between;
@@ -39,6 +39,15 @@ export default {
     background: #fff;
     width: 100%;
     z-index: 10;
+
+    .nav-bar-button {
+        position: absolute;
+        left: 154px;
+    }
+    .search-bar {
+        position: absolute;
+        left: 981px;
+    }
 }
 .nav-bar nav a {
     margin: 17px 0 20px 32px;
