@@ -35,6 +35,8 @@ export default {
         background: #f0f0f0;
         border-radius: 54px;
         padding-left: 44px;
+
+        outline: none;
     }
 }
 </style>

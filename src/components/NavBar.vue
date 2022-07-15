@@ -46,7 +46,7 @@ export default {
     }
     .search-bar {
         position: absolute;
-        left: 981px;
+        left: 50%;
     }
 }
 .nav-bar nav a {
