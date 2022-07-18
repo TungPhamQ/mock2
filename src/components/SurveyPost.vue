@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="blog-container" v-if="!isShow">
+        <div class="blog-container" v-if="isShow">
             <div class="user-container">
                 <h3>
                     Impress from the get-go with an interface that looks
@@ -36,6 +36,7 @@
                 <div v-for="option in input.options" :key="option.id">
                     <label :for="option.id">
                         <input
+                            class="input__element"
                             :type="input.type"
                             :id="option.id"
                             :name="option.name"
@@ -102,7 +103,7 @@
             </div>
             <div class="user-container">
                 <button class="button__main" @click="submit">Submit</button>
-                <button>Discard</button>
+                <button class="button__discard">Discard</button>
             </div>
         </div>
     </div>
@@ -361,6 +362,28 @@ export default {
     line-height: 24px;
     cursor: pointer;
 }
+.button__discard {
+    padding: 8px 24px;
+    border: none;
+    background: #e5e5e5;
+    border-radius: 20px;
+    color: #000;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 24px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+input,
+textarea,
+.select-box {
+    margin: 8px 0;
+}
+
+input {
+    margin-right: 11px;
+}
+
 .error {
     color: red !important;
 }

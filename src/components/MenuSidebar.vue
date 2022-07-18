@@ -5,18 +5,20 @@
                 v-for="item in menubarButtons"
                 :key="item.name"
                 class="menu-item"
-                :class="[item.name == 'Technology' ? activeClass : '']"
+                :class="{ activeClass: isActive === item.name }"
+                @click="choosePage(item.name)"
             >
                 <router-link :to="item.linkPage" class="title">
-                    <img :src="item.iconSrc" />
-                    <p>{{ item.name }}</p></router-link
-                >
-                <p class="post-amount">{{ item.newPostAmount }}</p>
+                    <font-awesome-icon :icon="item.icon" />
+                    <p>{{ item.name }}</p>
+
+                    <p class="post-amount">{{ item.newPostAmount }}</p>
+                </router-link>
             </div>
         </div>
         <div class="survey-section menu-item">
-            <router-link to="/survey" class="title"
-                ><img src="@/assets/clipboard-check.png" />
+            <router-link to="/survey" class="title">
+                <font-awesome-icon icon="fa-solid fa-clipboard" />
                 <p>Survey</p>
             </router-link>
             <p class="post-amount">12</p>
@@ -35,32 +37,37 @@ export default {
             menubarButtons: [
                 {
                     name: "News",
-                    iconSrc: require("../assets/siren-on.png"),
+                    icon: "fa-solid fa-lightbulb",
                     linkPage: "/news",
                     newPostAmount: 12,
                 },
                 {
                     name: "Technology",
-                    iconSrc: require("../assets/chalkboard.png"),
+                    icon: "fa-solid fa-laptop",
                     linkPage: "/technology",
                     newPostAmount: 12,
                 },
                 {
                     name: "Music",
-                    iconSrc: require("../assets/play.png"),
+                    icon: "fa-solid fa-play",
                     linkPage: "/music",
                     newPostAmount: "",
                 },
                 {
                     name: "Feedback",
-                    iconSrc: require("../assets/comment-alt.png"),
+                    icon: "fa-solid fa-message",
                     linkPage: "/feedback",
                     newPostAmount: "99+",
                 },
             ],
-            isActive: true,
+            isActive: "",
             activeClass: "activeClass",
         };
+    },
+    methods: {
+        choosePage(item) {
+            this.isActive = item;
+        },
     },
 };
 </script>
@@ -96,6 +103,10 @@ export default {
 
     &:hover {
         background: #e0efef;
+        color: #007c7c;
+        .svg-inline--fa {
+            color: #007c7c;
+        }
     }
 
     .post-amount {
@@ -111,6 +122,19 @@ export default {
     background: #007c7c;
     p {
         color: #fff;
+        &:hover {
+            color: #007c7c;
+            color: #fff;
+        }
+    }
+    .svg-inline--fa {
+        color: #fff;
+        &:hover {
+            color: #fff;
+        }
+    }
+    &:hover {
+        background: #007c7c;
     }
 }
 img {
@@ -118,10 +142,6 @@ img {
     width: 16px;
     height: 16px;
     margin: 12px 18px;
-
-    // background: #000;
-
-    filter: invert(0%);
 }
 .title {
     text-decoration: none;
@@ -131,5 +151,19 @@ img {
     line-height: 24px;
     display: flex;
     align-items: center;
+    p {
+        margin-left: 14px;
+    }
+    .svg-inline--fa {
+        width: 16px;
+        height: 16px;
+        margin: 12px 18px;
+    }
+    &:hover {
+        color: #007c7c;
+        .svg-inline--fa {
+            color: #007c7c;
+        }
+    }
 }
 </style>

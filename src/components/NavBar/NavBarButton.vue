@@ -4,11 +4,13 @@
             v-for="item in navbarButtons"
             :key="item.name"
             class="nav-button-item"
+            :class="{ activeClass: isActive === item.name }"
+            @click="choosePage(item.name)"
         >
-            <img :src="item.iconSrc" />
-            <router-link :to="item.linkPage" class="title">{{
-                item.name
-            }}</router-link>
+            <font-awesome-icon :icon="item.icon" />
+            <router-link :to="item.linkPage" class="title"
+                ><p>{{ item.name }}</p></router-link
+            >
         </div>
     </div>
 </template>
@@ -21,26 +23,33 @@ export default {
             navbarButtons: [
                 {
                     name: "Home",
-                    iconSrc: require("../../assets/home.png"),
+                    icon: "fa-solid fa-house",
                     linkPage: "/home",
                 },
                 {
                     name: "Post",
-                    iconSrc: require("../../assets/paper-plane.png"),
+                    icon: "fa-solid fa-paper-plane",
                     linkPage: "/post",
                 },
                 {
                     name: "Activity",
-                    iconSrc: require("../../assets/heart.png"),
+                    icon: "fa-solid fa-heart",
                     linkPage: "/activity",
                 },
                 {
                     name: "Bookmark",
-                    iconSrc: require("../../assets/bookmark.png"),
+                    icon: "fa-solid fa-bookmark",
                     linkPage: "/bookmark",
                 },
             ],
+            isActive: "",
+            activeClass: "activeClass",
         };
+    },
+    methods: {
+        choosePage(item) {
+            this.isActive = item;
+        },
     },
 };
 </script>
@@ -53,6 +62,9 @@ export default {
     .nav-button-item {
         display: flex;
         align-items: center;
+        &:hover {
+            color: #007c7c;
+        }
         .title {
             font-weight: 700;
             font-size: 0.875rem;
@@ -60,7 +72,19 @@ export default {
             text-decoration: none;
             color: #000;
             margin-left: 14px;
+            &:hover {
+                color: #007c7c;
+            }
         }
+    }
+}
+
+.activeClass {
+    p {
+        color: #007c7c;
+    }
+    .svg-inline--fa {
+        color: #007c7c;
     }
 }
 </style>

@@ -31,6 +31,11 @@ export default {
     }
     img {
         margin-right: 39px;
+        &:hover {
+            background: #e0efef;
+            padding: 8px 6px;
+            border-radius: 20px;
+        }
     }
 }
 </style>
