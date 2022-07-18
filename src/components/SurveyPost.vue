@@ -28,7 +28,7 @@
             </div>
 
             <div
-                v-for="input in arrayFiltered"
+                v-for="input in selectableInput"
                 :key="input.id"
                 class="user-container"
             >
@@ -40,10 +40,13 @@
                             :id="option.id"
                             :name="option.name"
                             :value="option.value"
+                            v-model="input.value"
+                            @change="input.validate()"
                         />{{ option.value }}</label
                     >
                     <br />
                 </div>
+                <p class="error">{{ input.messageError }}</p>
             </div>
 
             <div class="user-container">
@@ -52,16 +55,29 @@
                 </h4>
 
                 <div class="select-box" @click="toggleDropdown">
-                    <p>--Select option--</p>
+                    <p>
+                        {{
+                            inputs[2].value
+                                ? inputs[2].value
+                                : inputs[2].placeholder
+                        }}
+                    </p>
                     <img src="@/assets/caret-down.svg" />
                 </div>
                 <div class="select-box option-container" v-if="isShowDropdown">
-                    <div class="option-item" @click="selected(1)">option 1</div>
-                    <div class="option-item" @click="selected(2)">option 2</div>
-                    <div class="option-item" @click="selected(3)">option 3</div>
+                    <div
+                        v-for="option in inputs[2].options"
+                        :key="option.name"
+                        class="option-item"
+                        @click="selected(option.name)"
+                    >
+                        {{ option.name }}
+                    </div>
                 </div>
                 <p>You can select option</p>
+                <p class="error">{{ inputs[2].messageError }}</p>
             </div>
+
             <div class="user-container">
                 <h4>Veterinarian patient intake – long form</h4>
                 <input
@@ -71,16 +87,21 @@
                 />
                 <p>Label name</p>
             </div>
+
             <div class="user-container">
                 <h4>Mobile app feedback</h4>
                 <textarea
                     class="text-area-input"
                     placeholder="What are you thinking?"
+                    v-model="inputs[4].value"
+                    @input="inputs[4].countCharacter()"
                 ></textarea>
-                <p class="character-amount">1000/1000</p>
+                <p class="character-amount">
+                    {{ inputs[4].characterAmount }}/1000
+                </p>
             </div>
             <div class="user-container">
-                <button class="button__main">Submit</button>
+                <button class="button__main" @click="submit">Submit</button>
                 <button>Discard</button>
             </div>
         </div>
@@ -100,28 +121,43 @@ export default {
                     id: 1,
                     type: "checkbox",
                     title: "Corporate legal training quiz",
+                    value: [],
                     options: [
                         {
                             id: "training1",
                             name: "Training1",
-                            value: "dine in",
+                            value: "dine in 1",
                         },
                         {
                             id: "training2",
                             name: "training2",
-                            value: "dine in",
+                            value: "dine in 2",
                         },
                         {
                             id: "training3",
                             name: "Training3",
-                            value: "dine in",
+                            value: "dine in 3",
                         },
                     ],
+                    validate() {
+                        if (!this.value.length) {
+                            this.showError = true;
+                            this.messageError = "please check the box";
+                            return;
+                        }
+                        {
+                            this.showError = false;
+                            this.messageError = "";
+                        }
+                    },
+                    showError: false,
+                    messageError: "",
                 },
                 {
                     id: 2,
                     type: "radio",
                     title: "Adam Grant entry interview",
+                    value: "",
                     options: [
                         {
                             id: "Dine in",
@@ -139,6 +175,19 @@ export default {
                             value: "Pick up",
                         },
                     ],
+                    validate() {
+                        if (!this.value) {
+                            this.showError = true;
+                            this.messageError = "please check the box";
+                            return;
+                        }
+                        {
+                            this.showError = false;
+                            this.messageError = "";
+                        }
+                    },
+                    showError: false,
+                    messageError: "",
                 },
                 {
                     id: 3,
@@ -146,6 +195,7 @@ export default {
                     title: "Customer feedback survey template (Business to Business)",
                     placeholder: "-- Select option --",
                     note: "You can select option",
+                    value: "",
                     options: [
                         {
                             name: "option 1",
@@ -157,12 +207,42 @@ export default {
                             name: "option 3",
                         },
                     ],
+                    validate() {
+                        if (!this.value) {
+                            this.showError = true;
+                            this.messageError = "please choose option";
+                            return;
+                        }
+                        {
+                            this.showError = false;
+                            this.messageError = "";
+                        }
+                    },
+                    showError: false,
+                    messageError: "",
+                },
+                {
+                    id: 4,
+                    title: "Veterinarian patient intake – long form",
+                    validate() {},
+                },
+                {
+                    id: 5,
+                    characterTotal: 1000,
+                    characterAmount: 1000,
+                    value: "",
+                    validate() {},
+
+                    countCharacter() {
+                        this.characterAmount =
+                            this.characterTotal - this.value.length;
+                    },
                 },
             ],
         };
     },
     computed: {
-        arrayFiltered() {
+        selectableInput() {
             return this.inputs.filter(
                 (input) => input.type == "checkbox" || input.type == "radio"
             );
@@ -175,9 +255,15 @@ export default {
         toggleDropdown() {
             this.isShowDropdown = !this.isShowDropdown;
         },
-        selected(id) {
+        selected(e) {
             this.toggleDropdown();
-            console.log(id);
+            this.inputs[2].value = e;
+            this.inputs[2].validate();
+        },
+        submit() {
+            this.inputs.forEach((input) => {
+                input.validate();
+            });
         },
     },
 };
@@ -274,5 +360,8 @@ export default {
     font-size: 0.875rem;
     line-height: 24px;
     cursor: pointer;
+}
+.error {
+    color: red !important;
 }
 </style>
